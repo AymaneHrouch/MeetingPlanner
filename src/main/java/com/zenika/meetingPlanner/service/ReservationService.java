@@ -1,5 +1,6 @@
 package com.zenika.meetingPlanner.service;
 
+import com.zenika.meetingPlanner.constants.constants;
 import com.zenika.meetingPlanner.dto.ReservationDto;
 import com.zenika.meetingPlanner.model.Equipement;
 import com.zenika.meetingPlanner.model.Reservation;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.zenika.meetingPlanner.constants.constants.MINUTES_FOR_CLEANING_BEFORE_MEETING;
+import static com.zenika.meetingPlanner.constants.constants.*;
 
 @Service
 @Slf4j
@@ -49,8 +50,9 @@ public class ReservationService {
             throw new IllegalStateException("La date de fin doit être aprés la date de début");
         }
 
-        if (dateDebut.getHour() < 8 || dateDebut.getHour() > 20 || dateFin.getHour() > 20) {
-            throw new IllegalStateException("Les réunion doit être entre 8H et 20H");
+        if (dateDebut.getHour() < START_HOUR || dateDebut.getHour() > END_HOUR || dateFin.getHour() > 20) {
+            throw new IllegalStateException("Les réunion doit être entre " + START_HOUR +
+                    "H et " + END_HOUR + "H");
         }
         ReunionType reunionType = reunionTypeRepository.findById(reunionId).get();
         List<Equipement> equipements = reunionType.getEquipementsRequis();
