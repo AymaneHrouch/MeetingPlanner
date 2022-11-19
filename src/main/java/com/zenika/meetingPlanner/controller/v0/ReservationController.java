@@ -36,7 +36,7 @@ public class ReservationController {
         }
     }
 
-    @PostMapping(path = "test")
+    @PostMapping
     ResponseEntity<Reservation> makeReservation(@RequestBody ReservationDto reservationDto) {
         Reservation reservation = reservationService.createReservation(reservationDto);
         if (reservation == null) {
