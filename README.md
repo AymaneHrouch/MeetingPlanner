@@ -61,7 +61,7 @@ sous format
     "dateDebut": "2022-11-10T06:00:00.000Z",
     "dateFin": "2022-11-10T12:00:00.000Z",
     "nombrePersonnesConvie": 8,
-    "renuionTypeId": 2
+    "reunionTypeId": 2
 }
 ```
 ### reunionTypeId
