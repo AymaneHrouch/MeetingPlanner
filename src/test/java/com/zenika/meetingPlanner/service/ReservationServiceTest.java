@@ -56,7 +56,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(3);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         Reservation returned = reservationService.createReservation(reservationDto);
         assertThat(returned).isInstanceOf(Reservation.class);
@@ -75,7 +75,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(25);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         Reservation returned = reservationService.createReservation(reservationDto);
         assertThat(returned).isNull();
@@ -93,7 +93,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         // We make a reservation in the same salle with the same timestamps
         Reservation reservation = new Reservation();
@@ -121,7 +121,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         // We make a reservation in the same salle from 8 to 10, so it's not empty from 9 to 10
         LocalDateTime earlierReservationDateDebut = LocalDateTime.of(2022, 10, 10, 8, 0);
@@ -153,7 +153,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         assertThrows(IllegalStateException.class, () -> reservationService.createReservation(reservationDto));
     }
@@ -170,7 +170,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         assertThrows(IllegalStateException.class, () -> reservationService.createReservation(reservationDto));
     }
@@ -187,7 +187,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         assertThrows(IllegalStateException.class, () -> reservationService.createReservation(reservationDto));
     }
@@ -203,7 +203,7 @@ public class ReservationServiceTest {
         reservationDto.setDateDebut(dateDebut);
         reservationDto.setDateFin(dateFin);
         reservationDto.setNombrePersonnesConvie(5);
-        reservationDto.setRenuionTypeId(reunionTypeId);
+        reservationDto.setReunionTypeId(reunionTypeId);
 
         assertThrows(IllegalStateException.class, () -> reservationService.createReservation(reservationDto));
     }

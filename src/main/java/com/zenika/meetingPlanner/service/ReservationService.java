@@ -1,6 +1,5 @@
 package com.zenika.meetingPlanner.service;
 
-import com.zenika.meetingPlanner.constants.constants;
 import com.zenika.meetingPlanner.dto.ReservationDto;
 import com.zenika.meetingPlanner.model.Equipement;
 import com.zenika.meetingPlanner.model.Reservation;
@@ -41,7 +40,7 @@ public class ReservationService {
     }
 
     public Reservation createReservation(ReservationDto reservationDto) {
-        Long reunionId = reservationDto.getRenuionTypeId();
+        Long reunionId = reservationDto.getReunionTypeId();
         LocalDateTime dateDebut = reservationDto.getDateDebut();
         LocalDateTime dateFin = reservationDto.getDateFin();
         int nombrePersonnesConvie = reservationDto.getNombrePersonnesConvie();

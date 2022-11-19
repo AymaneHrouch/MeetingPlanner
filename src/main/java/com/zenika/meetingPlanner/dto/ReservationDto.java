@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ReservationDto {
     private int nombrePersonnesConvie;
-    private Long renuionTypeId;
+    private Long reunionTypeId;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
 }
