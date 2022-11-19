@@ -64,3 +64,8 @@ sous format
     "renuionTypeId": 2
 }
 ```
+### reunionTypeId
+
+Voici les Ids des reunion types (pour le frontend il faut faire un mapping en utilisant une form)
+
+![](https://user-images.githubusercontent.com/36491424/202863321-e73b2675-8f04-431c-830f-6d2df1723950.png)
