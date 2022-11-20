@@ -48,7 +48,7 @@ Ensuite, nous trions les salles en fonction de leur capacité, dans l'ordre croi
 
 nous itérons ensuite à travers ces salles et obtenons la première salle qui n'est pas réservée pendant la période spécifiée (y compris le temps de nettoyage).
 
-Dans le cas où nous n'avons pas trouvé de salle correspondante, nous retournos CONFLICT Https response.
+Dans le cas où nous n'avons pas trouvé de salle correspondante, nous retournos CONFLICT Http Status.
 
 ## Consommation de l'API
 
