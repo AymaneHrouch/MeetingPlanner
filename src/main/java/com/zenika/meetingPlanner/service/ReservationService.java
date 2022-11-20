@@ -32,6 +32,7 @@ public class ReservationService {
     private final SalleRepository salleRepository;
     private final ReunionTypeRepository reunionTypeRepository;
 
+
     @Autowired
     public ReservationService(ReservationRepository reservationRepository, SalleRepository salleRepository, ReunionTypeRepository reunionTypeRepository) {
         this.reservationRepository = reservationRepository;
@@ -54,20 +55,19 @@ public class ReservationService {
                     "H et " + END_HOUR + "H");
         }
         ReunionType reunionType = reunionTypeRepository.findById(reunionId).get();
-        List<Equipement> equipements = reunionType.getEquipementsRequis();
+        List<Equipement> equipementsRequis = reunionType.getEquipementsRequis();
 
-        List<Salle> salles = salleRepository.findAll().stream()
-                .filter(getSallePredicate(nombrePersonnesConvie, reunionType, equipements))
+        // It's better to reserve the salle with the least capacity (in order to leave bigger ones to potential bigger meetings)
+        List<Salle> salles = salleRepository.findAllByOrderByCapacite().stream()
+                .filter(getSallePredicate(nombrePersonnesConvie, reunionType, equipementsRequis))
                 .collect(Collectors.toList());
 
         log.info("the reunion type is " + reunionType.getName());
-        // It's better to reserve the salle with the least capacity (in order to leave bigger ones to potential bigger meetings)
-        sortSallesByCapacite(salles);
 
         log.info("We could find " + salles.size() + " salles correspending to your search.");
         log.info("We now try to find which one isn't reserved in the given time interval");
         List<Reservation> allReservations = reservationRepository.findAll();
-        boolean skipSalle = false;
+        boolean skipSalle;
         for (Salle salle : salles) {
             skipSalle = false;
             skipSalle = verifyIfSalleAlreadyReserved(dateDebut, dateFin, allReservations, skipSalle, salle);
@@ -105,18 +105,9 @@ public class ReservationService {
         return skipSalle;
     }
 
-    private void sortSallesByCapacite(List<Salle> salles) {
-        Collections.sort(salles, new Comparator<Salle>() {
-            @Override
-            public int compare(Salle s1, Salle s2) {
-                return s1.getCapaciteDisponible() - s2.getCapaciteDisponible();
-            }
-        });
-    }
-
-    private Predicate<Salle> getSallePredicate(int nombrePersonneConvie, ReunionType reunionType, List<Equipement> equipements) {
+    private Predicate<Salle> getSallePredicate(int nombrePersonneConvie, ReunionType reunionType, List<Equipement> equipementsRequis) {
         return salle ->
-                salle.getEquipements().containsAll(equipements) &&
+                salle.getEquipements().containsAll(equipementsRequis) &&
                         salle.getCapaciteDisponible() >= reunionType.getMinCapaciteRequis() &&
                         salle.getCapaciteDisponible() >= nombrePersonneConvie;
     }

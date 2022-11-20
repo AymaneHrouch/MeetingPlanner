@@ -11,8 +11,5 @@ import java.util.List;
 
 @Repository
 public interface SalleRepository extends JpaRepository<Salle, Long> {
-
-    @Query(value = "SELECT * FROM salle s, salles_equipements se WHERE s.id = se.salle_id AND se.equipement_id in (3);",
-            nativeQuery = true)
-    List<Salle> getSallesByEquipements(@Param("equipements") Collection<Long> equipementsIds);
+    List<Salle> findAllByOrderByCapacite();
 }

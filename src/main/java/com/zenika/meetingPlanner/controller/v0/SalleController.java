@@ -32,7 +32,7 @@ public class SalleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Salle>> hello() {
+    public ResponseEntity<List<Salle>> getSalles() {
         return new ResponseEntity<>(salleRepository.findAll(), HttpStatus.OK);
     }
 

@@ -207,4 +207,27 @@ public class ReservationServiceTest {
 
         assertThrows(IllegalStateException.class, () -> reservationService.createReservation(reservationDto));
     }
+
+    @Test
+    void shouldReserveSalleWithTheLowestCapacitePossible() {
+        LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, 10, 0);
+        LocalDateTime dateFin = LocalDateTime.of(2022, 10, 10, 11, 0);
+
+        // SPEC réunion
+        Long reunionTypeId = 2L;
+
+        ReservationDto reservationDto = new ReservationDto();
+        reservationDto.setDateDebut(dateDebut);
+        reservationDto.setDateFin(dateFin);
+        reservationDto.setNombrePersonnesConvie(2);
+        reservationDto.setReunionTypeId(reunionTypeId);
+
+        // There are two convenient salles for this,
+        // * salle E1004 with a capacity of 4
+        // * salle E2004 with a capacity of 9
+        // --> We should reserve E1004
+
+        Reservation returned = reservationService.createReservation(reservationDto);
+        assertThat(returned.getSalle().getNom()).isEqualTo("e1004");
+    }
 }
