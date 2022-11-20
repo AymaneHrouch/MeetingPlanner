@@ -66,11 +66,10 @@ public class ReservationService {
 
         log.info("We could find " + salles.size() + " salles correspending to your search.");
         log.info("We now try to find which one isn't reserved in the given time interval");
-        List<Reservation> allReservations = reservationRepository.findAll();
         boolean skipSalle;
         for (Salle salle : salles) {
-            skipSalle = false;
-            skipSalle = verifyIfSalleAlreadyReserved(dateDebut, dateFin, allReservations, skipSalle, salle);
+            List<Reservation> allReservationsForThisSalle = reservationRepository.findReservationsBySalle(salle);
+            skipSalle = verifyIfSalleAlreadyReserved(dateDebut, dateFin, allReservationsForThisSalle);
             if (skipSalle) continue;
 
             // If we get here then the salle is good for reservation
@@ -89,13 +88,13 @@ public class ReservationService {
         return null;
     }
 
-    private boolean verifyIfSalleAlreadyReserved(LocalDateTime dateDebut, LocalDateTime dateFin, List<Reservation> allReservations, boolean skipSalle, Salle salle) {
+    private boolean verifyIfSalleAlreadyReserved(LocalDateTime dateDebut, LocalDateTime dateFin, List<Reservation> allReservations) {
+        boolean skipSalle = false;
         for (Reservation reservation : allReservations) {
             // A bad reservation is a reservation that is in the same salle
             // finishes after the beginning time (which is the actual beginning minus one hour)
             // starts before the ending time
-            if (reservation.getSalle().equals(salle) &&
-                    reservation.getDateFin().isAfter(dateDebut.minusMinutes(MINUTES_FOR_CLEANING_BEFORE_MEETING)) &&
+            if (   reservation.getDateFin().isAfter(dateDebut.minusMinutes(MINUTES_FOR_CLEANING_BEFORE_MEETING)) &&
                     reservation.getDateDebut().isBefore(dateFin)) {
                 log.info("We found a conflict between reservations, this salle cannot be reserved");
                 skipSalle = true;
