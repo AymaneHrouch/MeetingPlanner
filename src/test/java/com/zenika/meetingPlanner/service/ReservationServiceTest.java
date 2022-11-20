@@ -1,6 +1,7 @@
 package com.zenika.meetingPlanner.service;
 
 import com.zenika.meetingPlanner.config.StartupRunner;
+import com.zenika.meetingPlanner.constants.constants;
 import com.zenika.meetingPlanner.dto.ReservationDto;
 import com.zenika.meetingPlanner.model.Reservation;
 import com.zenika.meetingPlanner.model.Salle;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static com.zenika.meetingPlanner.constants.constants.END_HOUR;
+import static com.zenika.meetingPlanner.constants.constants.START_HOUR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -142,8 +145,8 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void shouldThrowIfDateDebutIsBefore8h() {
-        LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, 7, 0);
+    void shouldThrowIfDateDebutIsBeforeStartHour() {
+        LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, START_HOUR - 1, 0);
         LocalDateTime dateFin = LocalDateTime.of(2022, 10, 10, 11, 0);
 
         Long reunionTypeId = 1L;
@@ -159,9 +162,9 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void shouldThrowIfDateDebutIsAfter20h() {
-        LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, 21, 0);
-        LocalDateTime dateFin = LocalDateTime.of(2022, 10, 10, 22, 0);
+    void shouldThrowIfDateDebutIsAfterEndHour() {
+        LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, END_HOUR + 1, 0);
+        LocalDateTime dateFin = LocalDateTime.of(2022, 10, 10, END_HOUR + 2, 0);
 
         Long reunionTypeId = 1L;
 
@@ -176,9 +179,9 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void shouldThrowIfDateFinIsAfter20h() {
+    void shouldThrowIfDateFinIsAfterEndHour() {
         LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 10, 9, 0);
-        LocalDateTime dateFin = LocalDateTime.of(2022, 10, 11, 21, 0);
+        LocalDateTime dateFin = LocalDateTime.of(2022, 10, 11, END_HOUR + 1, 0);
 
         Long reunionTypeId = 1L;
 
